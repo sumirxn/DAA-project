@@ -1,8 +1,8 @@
-**Intelligent Text Correction using Edit Distance (Levenshtein Distance)**
+**Intelligent Text Correction using Edit Distance (Damerau-Levenshtein Distance)**
 
 - Text editors and messaging applications need to detect misspelled words and suggest corrections
 - The system compares user input against a dictionary and finds the closest valid word
-- The distance metric used is the minimum edit distance (Levenshtein distance), which counts the minimum number of operations (insertions, deletions, substitutions) needed to transform one string into another
+- The distance metric used is the minimum edit distance (Damerau-Levenshtein distance), which counts the minimum number of operations (insertions, deletions, substitutions, transpositions) needed to transform one string into another
 - We implement a Dynamic Programming approach to efficiently compute this distance
 
 **Task 1: Formulating the Recurrence Relation**
@@ -20,6 +20,10 @@
       - `dp[i-1][j] + 1` represents deletion of source[i-1]
       - `dp[i][j-1] + 1` represents insertion of target[j-1]
       - `dp[i-1][j-1] + 1` represents substitution of source[i-1] with target[j-1]
+      - 
+  - If two adjacent characters are swapped:
+    - If i > 1 and j > 1 and source[i-1] == target[j-2] and source[i-2] == target[j-1]:
+      dp[i][j] = min(dp[i][j], dp[i-2][j-2] + 1)
 
 Pseudocode:
 ```
@@ -52,6 +56,8 @@ function editDistance(source, target)
                     dp[i][j-1],      // insertion
                     dp[i-1][j-1]     // substitution
                 )
+           if i > 1 and j > 1 and source[i-1] == target[j-2] and source[i-2] == target[j-1] then:
+                dp[i][j] = min(dp[i][j], dp[i-2][j-2] + 1)
     
     return dp[m][n]
 ```
@@ -69,12 +75,13 @@ function editDistance(source, target)
 
 **Task 3: Reconstructing the Operation Sequence**
 
-- To output the sequence of operations (insert, delete, substitute), we need to backtrack through the DP table
+- To output the sequence of operations (insert, delete, substitute, transposition), we need to backtrack through the DP table
 - Start from dp[m][n] and trace back to dp[0][0]
 - At each step, determine which operation was used by comparing:
   - `dp[i][j]` with `dp[i-1][j-1]` → substitution or match
   - `dp[i][j]` with `dp[i-1][j]` → deletion
   - `dp[i][j]` with `dp[i][j-1]` → insertion
+  - `dp[i][j]` with `dp[i-2][j-2]` → transposition
 
 Pseudocode for backtracking:
 ```
