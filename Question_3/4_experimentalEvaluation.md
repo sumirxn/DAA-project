@@ -1,29 +1,5 @@
 **Experimental Evaluation**
 
-**Tasks 5 & 6: Performance Analysis and Testing**
-
-We conduct experiments with two dictionary sizes and various typing error scenarios.
-The edit distance algorithm is evaluated on correctness, efficiency, and real-world applicability.
-
-| Experiment | Typed Word   | Dict Size | Test Purpose                           | Expected Behavior |
-|------------|--------------|-----------|----------------------------------------|-------------------|
-| Exp 1      | "teh"        | Small (50)| Single letter deletion (common error)   | Suggests "the"    |
-| Exp 2      | "recieve"    | Small (50)| Missing letter (common error)          | Suggests "receive"|
-| Exp 3      | "speling"    | Small (50)| Character transposition                | Suggests "speling" or "spelling" |
-| Exp 4      | "wrld"       | Small (50)| Multiple missing letters               | Suggests "world"  |
-| Exp 5      | "aple"       | Small (50)| Single substitution                    | Suggests "apple"  |
-| Exp 6      | "hellllo"    | Small (50)| Character repetition (common typo)     | Suggests "hello"  |
-| Exp 7      | "accomodate" | Medium(1K)| Common misspelling (real-world)        | Suggests "accommodate" |
-| Exp 8      | "ocasion"    | Medium(1K)| Missing letter in longer word          | Suggests "occasion" |
-| Exp 9      | "halo"       | Large (10K) | Valid word but different (threshold test) | Distance = 1      |
-| Exp 10     | "qwerty"     | Large (10K) | Non-word, completely different         | Multiple suggestions |
-
----
-
-**Experimental Evaluation**
-
-**Tasks 5 & 6: Performance Analysis and Testing**
-
 The system is tested using the exact 10 experimental cases implemented in the code.  
 Each experiment evaluates correction accuracy, edit distance quality, and execution time.
 
