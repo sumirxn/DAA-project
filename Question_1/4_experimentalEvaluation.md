@@ -9,7 +9,7 @@
 |------------|----------------------|-------------|----------------|---------------------------------|
 | Exp 1      | Repetitive (TTAGGG)  | 30          | 6              | Telomere repeat                 |
 | Exp 2      | Non-repetitive       | 31          | 8              | Coding sequence                 |
-| Exp 3      | Repetitive (poly-A)  | 100,000     | 11             | Worst case — homopolymer run    |
+| Exp 3      | Repetitive (poly-A)  | 100,000     | 11             | Worst case : homopolymer run    |
 | Exp 4      | Random DNA           | 100,000     | 8              | Typical coding region           |
 | Exp 5      | Random DNA           | 100,000     | 16             | Longer pattern                  |
 | Exp 6      | Repetitive (ACGT)    | 100,000     | 9              | Pattern absent : accuracy check |
@@ -101,10 +101,10 @@ Exp 8: Pattern equals full text
 
 Tasks 1 and 2 : LPS and KMP on short DNA
 - The LPS array for "ACACAG" correctly identifies the prefix-suffix relationships within the pattern
-- In the search demo, KMP found both matches using exactly 23 comparisons on a text of length 23,   confirming that i visited every character exactly once, as expected from O(n)
+- In the search demo, KMP found both matches using exactly 23 comparisons on a text of length 23,   confirming that `i` visited every character exactly once, as expected from `O(n)`
 
 Task 3 : Worst case on repetitive DNA
-- On a 500-character poly-A sequence with pattern "AAAAAAAAT", KMP used exactly 500 comparisons , effectively n, which is the closest to the theoretical minimum possible
+- On a 500-character poly-A sequence with pattern "AAAAAAAAT", KMP used exactly 500 comparisons, effectively n, which is the closest to the theoretical minimum possible
 -  This demonstrates KMP's linear guarantee on the exact type of input (homopolymer runs) that is common in real genomic data
 
 Experiment 1 : Repetitive DNA (Telomere)

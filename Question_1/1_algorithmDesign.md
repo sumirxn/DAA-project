@@ -10,9 +10,9 @@
 - The LPS (Longest Prefix Suffix) array is the preprocessing step that makes KMP efficient
 - It is computed from the pattern alone
 
-- For a pattern of length m, `lps[i]` stores the length of the longest proper prefix of `pattern[0...i]`, that is also a suffix of `pattern[0...i]` (proper prefix means that a prefix is not the full string itself)
+- For a pattern of length `m`, `lps[i]` stores the length of the longest proper prefix of `pattern[0...i]`, that is also a suffix of `pattern[0...i]` (proper prefix means that a prefix is not the full string itself)
 
-- When a mismatch occurs after matching j characters of the pattern, we know that `pattern[0...j-1]` matched `text[i-j....i-1]`
+- When a mismatch occurs after matching `j` characters of the pattern, we know that `pattern[0...j-1]` matched `text[i-j....i-1]`
 - The LPS value `lps[j-1]` tells us the longest portion of that matched prefix that can still serve as the start of a new match, so we jump to `lps[j-1]` instead of restarting from 0
 
 Pseudocode : 
@@ -43,17 +43,17 @@ function buildLPS(pattern, m)
 **Task 2 : KMP Algorithm**
 
 - In KMP ALgorithm, we use two pointers
-    - i : moves through the text
-    - j : tracks how many pattern characters have been matched so far
+    - `i` : moves through the text
+    - `j` : tracks how many pattern characters have been matched so far
 
 - When a mismatch happens, instead of restarting, we jump to the next postion using the LPS array
 
 - while searching
     - if a match occurs (`text[i]`==`pattern[j]`), then both pointers advance
-    - once j reaches m, it means that the full match is found, we report the match and then set `j = lps[j-1]`, so we can continue searching for more occurences of the pattern and not miss any overlapping matches
+    - once `j` reaches `m`, it means that the full match is found, we report the match and then set `j = lps[j-1]`, so we can continue searching for more occurences of the pattern and not miss any overlapping matches
     - when there is a mismatch
-        - if j>0, we set `j=lps[j-1]` and continue searching
-        - if j=0, we advance the i pointer
+        - if `j>0`, we set `j=lps[j-1]` and continue searching
+        - if `j=0`, we advance the `i` pointer
 
 Pseudocode : 
 ```
