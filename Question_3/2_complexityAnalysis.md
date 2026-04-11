@@ -72,7 +72,7 @@ Dictionary Size Impact:
 - Small dictionary (100 words): 100 × O(m × n) for all comparisons
 - Medium dictionary (10,000 words): 10,000 × O(m × n)
 - Large dictionary (100,000+ words): 100,000 × O(m × n)
-- For real-time suggestions, only top N closest matches are computed
+- For each typed word, edit distance is computed against every dictionary word, then all matches are sorted and the top N suggestions are displayed
 
 **Comparison with Naive Approach**
 
@@ -89,22 +89,18 @@ DP vs Naive:
 | Practical Usage     | Infeasible   | Feasible|
 
 
-**Optimization Techniques for Large-Scale Dictionaries**
+**Possible Future Optimizations**
 
-1. Early Termination
-   - If the distance exceeds a threshold (e.g., 2), stop computing
-   - Reduces average-case time
-
-2. Space-Optimized DP (1D Array)
+1. Space-Optimized DP (1D Array)
    - For large dictionaries, use rolling array technique
    - Reduces space from O(m × n) to O(min(m, n))
    - Slightly increases time due to array shifting
 
-3. Preprocessing Dictionary
+2. Preprocessing Dictionary
    - Sort words by length
    - Skip words that differ in length by more than the threshold
    - Example: if typed word is length 5 and threshold is 1, skip words of length < 4 or > 6
 
-4. Parallel Processing
+3. Parallel Processing
    - Compute distances for multiple dictionary words in parallel
    - For k words in dictionary: O(k × m × n) becomes O(m × n) with k processors
