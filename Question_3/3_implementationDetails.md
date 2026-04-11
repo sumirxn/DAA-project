@@ -42,24 +42,18 @@ For the experiments:
 
 **3. Design Techniques**
 
-- Dynamic Programming with Memoization
+- Dynamic Programming using Bottom-Up Tabulation
   - Avoids recomputing the same subproblems
   - Every dp[i][j] is computed exactly once
   - Enables efficient solution where naive approach would take exponential time
 
-- Two-Pointer Technique (in backtracking)
+- DP Table Backtracking
   - i and j pointers traverse the DP table from bottom-right to top-left
   - At each step, we move based on which previous cell was used (deletion, insertion, or substitution)
   - Ensures we reconstruct operations in the correct order
-
-- Dictionary Filtering
-  - For efficiency, pre-filter dictionary words:
-    - Group words by length
-    - Only compare with words within ±2 characters of typed word length
-    - Skip words if distance exceeds a threshold (e.g., 2 or 3)
-
-- Early Termination Optimization
-  - If edit distance exceeds a maximum threshold, stop computing further
-  - Example: if threshold = 2 and current distance reaches 3, skip remaining cells
-  - Reduces average-case time for large dictionaries
+  - 
+- Suggestion Ranking
+  - All dictionary words compared
+  - Results sorted by smallest edit distance
+  - Best match shown first
 
