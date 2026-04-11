@@ -1,200 +1,227 @@
 **Experimental Evaluation**
 
-The system is tested using the exact 10 experimental cases implemented in the code.  
-Each experiment evaluates correction accuracy, edit distance quality, and execution time.
+The Intelligent Text Correction System was tested using the 10 experimental cases implemented directly in the program.  Each test checks how accurately the algorithm detects and corrects different types of spelling mistakes using edit distance.
+
+The current implementation uses a fixed sample dictionary of 13 valid words:
+the, receive, spelling, world, apple, hello, accommodate, occasion, halo, accommodation, spellings, word, help
 
 ---
 
-| Experiment | Typed Word   | Dictionary Size | Test Purpose                          | Expected Output |
-|------------|--------------|----------------|---------------------------------------|----------------|
-| Exp 1 | "teh" | Small | Swapped letters typo | "the" |
-| Exp 2 | "recieve" | Small | Common misspelling | "receive" |
-| Exp 3 | "speling" | Small | Missing repeated letter | "spelling" |
-| Exp 4 | "wrld" | Small | Missing vowel | "world" |
-| Exp 5 | "aple" | Small | Missing repeated consonant | "apple" |
-| Exp 6 | "hellllo" | Small | Extra repeated letters | "hello" |
-| Exp 7 | "accomodate" | Medium | Real-world spelling mistake | "accommodate" |
-| Exp 8 | "ocasion" | Medium | Missing repeated consonant | "occasion" |
-| Exp 9 | "halo" | Large | Exact valid word test | "halo" |
-| Exp 10 | "qwerty" | Large | Invalid random input | Closest ranked suggestion |
+## Test Cases Used
+
+| Experiment | Typed Word | Error Type | Expected Output |
+|-------------|------------|-------------|----------------|
+| Exp 1 | teh | Swapped letters | the |
+| Exp 2 | recieve | Common misspelling | receive |
+| Exp 3 | speling | Missing repeated letter | spelling |
+| Exp 4 | wrld | Missing vowel | world |
+| Exp 5 | aple | Missing repeated consonant | apple |
+| Exp 6 | hellllo | Extra repeated letters | hello |
+| Exp 7 | accomodate | Real-world spelling mistake | accommodate |
+| Exp 8 | ocasion | Missing repeated consonant | occasion |
+| Exp 9 | halo | Exact valid word | halo |
+| Exp 10 | qwerty | Invalid random input | Closest available match |
 
 ---
 
-**Results Summary**
+## Experimental Results Summary
 
-```text
-Exp 1: Testing word correction
-   Typed Word : teh             | Expected : the
+All 10 test cases executed successfully.
 
-   Suggested Word       Distance        Time(ms)
-   ------------------------------------------------------
-   the                  1               0.012
-   help                 2               0.000
-   hello                3               0.000
-   Accuracy : PASS
-   Best Match Found: the
+### Accuracy:
+- PASS in all 10 experiments
+- Correct expected suggestion found in every required case
 
+### Typical Execution Time:
+- Range observed: approximately 0.009 ms to 0.020 ms per experiment
 
-Exp 2: Testing word correction
-   Typed Word : recieve        | Expected : receive
+Because the dictionary size is small, runtime remains extremely low.
 
-   Suggested Word       Distance        Time(ms)
-   ------------------------------------------------------
-   receive             1               0.014
-   Accuracy : PASS
-   Best Match Found: receive
-
-
-Exp 3: Testing word correction
-   Typed Word : speling        | Expected : spelling
-
-   Suggested Word       Distance        Time(ms)
-   ------------------------------------------------------
-   spelling            1               0.013
-   spellings           2               0.000
-   Accuracy : PASS
-   Best Match Found: spelling
-
-
-Exp 4: Testing word correction
-   Typed Word : wrld            | Expected : world
-
-   Suggested Word       Distance        Time(ms)
-   ------------------------------------------------------
-   world                1               0.011
-   word                 2               0.000
-   Accuracy : PASS
-   Best Match Found: world
-
-
-Exp 5: Testing word correction
-   Typed Word : aple            | Expected : apple
-
-   Suggested Word       Distance        Time(ms)
-   ------------------------------------------------------
-   apple                1               0.010
-   Accuracy : PASS
-   Best Match Found: apple
-
-
-Exp 6: Testing word correction
-   Typed Word : hellllo         | Expected : hello
-
-   Suggested Word       Distance        Time(ms)
-   ------------------------------------------------------
-   hello                2               0.015
-   help                 4               0.000
-   Accuracy : PASS
-   Best Match Found: hello
-
-
-Exp 7: Testing word correction
-   Typed Word : accomodate      | Expected : accommodate
-
-   Suggested Word       Distance        Time(ms)
-   ------------------------------------------------------
-   accommodate         1               0.019
-   accommodation       4               0.000
-   Accuracy : PASS
-   Best Match Found: accommodate
-
-
-Exp 8: Testing word correction
-   Typed Word : ocasion         | Expected : occasion
-
-   Suggested Word       Distance        Time(ms)
-   ------------------------------------------------------
-   occasion            1               0.017
-   Accuracy : PASS
-   Best Match Found: occasion
-
-
-Exp 9: Testing word correction
-   Typed Word : halo            | Expected : halo
-
-   Suggested Word       Distance        Time(ms)
-   ------------------------------------------------------
-   halo                 0               0.009
-   hello                2               0.000
-   help                 2               0.000
-   Accuracy : PASS
-   Best Match Found: halo
-
-
-Exp 10: Testing word correction
-   Typed Word : qwerty          | Expected : help
-
-   Suggested Word       Distance        Time(ms)
-   ------------------------------------------------------
-   help                 5               0.020
-   world                5               0.000
-   the                  6               0.000
-   Accuracy : PASS
-   Best Match Found: help
 ---
-```
-**Analysis:**
 
-**Task 5: Performance on Realistic Typing Errors**
+## Detailed Performance Analysis
 
-1. **Single Character Errors (Experiments 1-6)**
-   - Small dictionary (50 words) with distance ≤ 2
-   - Average time: ~0.027 ms per word
-   - All correct suggestions ranked #1
-   - DP approach effectively identifies minimal edits
+### Experiment 1: Swapped Character Error
+Input:
+teh
 
-2. **Dictionary Size Impact (Experiments 7-10)**
-   - Medium dictionary (1K words): ~0.14 ms average
-   - Large dictionary (10K words): ~0.59 ms average
-   - Time scales linearly with dictionary size: O(k × m × n)
-   - Early termination reduces actual comparisons from k to ~2% when threshold = 2
+Output:
+the
 
-3. **Real-World Misspellings (Experiments 7-8)**
-   - Common misspellings like "accomodate" identified instantly
-   - Correct suggestions ranked first in 100% of cases
-   - Single-operation errors solved in < 0.2 ms
+Explanation:
+The algorithm correctly identifies that "teh" differs from "the" by a transposition.
 
-**Task 6: Testing on Different Dictionary Sizes**
+---
 
-**Small Dictionary (50 words) - Characteristics:**
-- Use case: Learning applications, specialized domains
-- Time per word: 0.022-0.031 ms
-- Total time for 1,000 typed words: ~26 ms
-- Memory usage: Minimal (~5 KB for DP table)
-- Limitation: May not find suggestions for less common words
+### Experiment 2: Common Misspelling
+Input:
+recieve
 
-**Medium Dictionary (1,000 words) - Characteristics:**
-- Use case: Mobile keyboard autocorrect, messaging apps
-- Time per word: 0.09-0.19 ms
-- Total time for 1,000 typed words: ~140 ms
-- Memory usage: Moderate (~12 KB per DP table)
-- Real-world relevance: Covers most common English words
-- Performance: Suitable for real-time suggestions (< 200 ms latency acceptable)
+Output:
+receive
 
-**Large Dictionary (10,000-100,000 words) - Characteristics:**
-- Use case: Desktop text editors, professional applications
-- Time per word: 0.34-0.85 ms (without optimization), ~0.1 ms (with early termination)
-- Total time for 1,000 typed words: ~100 ms (with optimization)
-- Memory usage: Can be optimized to O(min(m,n)) = O(6) per comparison
-- Real-world relevance: Comprehensive English dictionary
-- Performance: Still practical with optimization strategies
+Explanation:
+The algorithm detects incorrect letter ordering and finds nearest valid correction.
 
-**Efficiency Conclusions:**
+---
 
-1. **DP is superior to naive enumeration:**
-   - For "kitten" → "sitting": DP uses 42 operations vs naive's millions
+### Experiment 3: Missing Letter
+Input:
+speling
 
-2. **Dictionary size is the main bottleneck:**
-   - Optimize by:
-     - Grouping words by length (±2 character tolerance)
-     - Implementing early termination (threshold = 2)
-     - Using parallel processing for large dictionaries
-     - Caching frequent lookups
+Output:
+spelling
 
-3. **Accuracy is 100% for distance metrics:**
-   - DP guarantees optimal solution (minimum edits)
-   - Wrong suggestions only occur if similar words exist in dictionary
+Explanation:
+Missing repeated character is detected and corrected.
 
-4. **Practical real-time performance:**
-   - Small typing errors (distance 1-2): < 0.2 ms for 10K dictionary
-   - Suitable for autocorrect on modern devices (< 50 ms user perception threshold)
+---
+
+### Experiment 4: Missing Vowel
+Input:
+wrld
+
+Output:
+world
+
+Explanation:
+The algorithm inserts missing vowel efficiently.
+
+---
+
+### Experiment 5: Missing Repeated Consonant
+Input:
+aple
+
+Output:
+apple
+
+Explanation:
+Single missing repeated consonant corrected correctly.
+
+---
+
+### Experiment 6: Extra Repeated Letters
+Input:
+hellllo
+
+Output:
+hello
+
+Explanation:
+Extra repeated letters are removed through deletion operations.
+
+---
+
+### Experiment 7: Real-World Misspelling
+Input:
+accomodate
+
+Output:
+accommodate
+
+Explanation:
+Common human spelling mistake corrected successfully.
+
+---
+
+### Experiment 8: Missing Repeated Consonant
+Input:
+ocasion
+
+Output:
+occasion
+
+Explanation:
+Repeated consonant restored correctly.
+
+---
+
+### Experiment 9: Exact Match Case
+Input:
+halo
+
+Output:
+halo
+
+Explanation:
+Exact word match gives edit distance 0.
+
+---
+
+### Experiment 10: Invalid Random Input
+Input:
+qwerty
+
+Output:
+help (closest ranked suggestion)
+
+Explanation:
+Since no exact close word exists, nearest available dictionary match is returned.
+
+---
+
+## Task 5: Performance on Realistic Typing Errors
+
+The system performs well on realistic typing mistakes including:
+
+1. Swapped adjacent letters  
+2. Missing characters  
+3. Repeated characters  
+4. Missing repeated consonants  
+5. Real-world spelling mistakes  
+
+These are common in real typing environments such as:
+- text editors
+- messaging apps
+- mobile keyboards
+
+The DP-based edit distance algorithm handles all these effectively.
+
+---
+
+## Task 6: Dictionary Size Discussion
+
+### Current Implementation:
+Only one sample dictionary is used:
+13 words
+
+So this project currently demonstrates:
+- algorithm correctness
+- typo correction logic
+- ranking of nearest suggestions
+
+---
+
+### Dictionary Size Limitation:
+Because only 13 words are used:
+- no real benchmarking on larger datasets is performed
+- no actual comparison across multiple dictionary sizes is measured
+
+---
+
+### Scalability:
+The algorithm is scalable to larger dictionaries.
+
+If expanded to:
+- 50 words
+- 1000 words
+- 10000 words
+
+the same logic will still work without code redesign.
+
+Only runtime increases linearly with dictionary size.
+
+---
+
+## Efficiency Conclusions
+
+1. Dynamic Programming guarantees minimum edit distance solution.
+
+2. All corrections are optimal.
+
+3. Current implementation is fast because dictionary is small.
+
+4. Larger dictionaries can be supported by loading words from files.
+
+---
