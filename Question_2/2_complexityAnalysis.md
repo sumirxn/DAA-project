@@ -49,3 +49,8 @@ Worst case: A chain of courses where each requires the previous one (e = n-1)
 If the completed course count at the end is less than n, a cycle exists in the prerequisite graph.
 This catches invalid course structures (e.g., Course A requires Course B and Course B requires Course A)
 Cycle detection comes for free with no additional time cost beyond the standard BFS pass.
+
+**Complexity**
+| Algorithm | Preprocessing Time | Execution Time (Best Case) | Execution Time (Average Case) | Execution Time (Worst Case) | Space Complexity |
+|-----------|--------------------|----------------------------|-------------------------------|-----------------------------|------------------|
+| Kahn’s Topological Sort | O(V + E) | O(V + E) | O(V + E) | O(V + E) | O(V + E) |
