@@ -42,7 +42,7 @@ function buildLPS(pattern, m)
 
 **Task 2 : KMP Algorithm**
 
-- In KMP ALgorithm, we use two pointers
+- In KMP Algorithm, we use two pointers
     - `i` : moves through the text
     - `j` : tracks how many pattern characters have been matched so far
 
