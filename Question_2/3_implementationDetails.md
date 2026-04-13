@@ -27,19 +27,23 @@
 
 3. Design Techniques
    - BFS Layer Partitioning
-     At the start of each BFS iteration, we record the current queue size as the layer size.
+
+      At the start of each BFS iteration, we record the current queue size as the layer size.
      We dequeue exactly that many courses, process them, and treat everything we dequeue in this round as one semester.
      Newly unlocked courses (enqueued during this round) are processed in the next round, i.e., the next semester.
      This cleanly separates semesters without any extra data structures.
 
    - In-Place In-Degree Updates
+
      Rather than rebuilding the in-degree array between iterations, we decrement it in-place as each edge is processed.
      This avoids any repeated work and keeps the algorithm at a single O(n + e) pass.
 
    - Cycle Detection via Count Check
+
      After the BFS completes, we compare the number of scheduled courses against n.
      If they differ, some courses were never added to the queue — meaning they are part of a cycle.
      This is a constant-time check that requires no extra traversal.
 
    - Dynamic Memory Allocation
-     Adjacency lists and semester plan arrays are heap-allocated using malloc so the implementation can handle variable-sized catalogs up to 100,000 courses without stack overflow.
+
+      Adjacency lists and semester plan arrays are heap-allocated using malloc so the implementation can handle variable-sized catalogs up to 100,000 courses without stack overflow.
