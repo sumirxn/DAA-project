@@ -4,20 +4,20 @@ Let n = number of courses (nodes) and e = number of prerequisite edges
 
 **Task 4 : Time and Space Complexity**
 
-1. Building the In-Degree Array
+1. Building the In-Degree Array: 
    We iterate over every edge in the graph exactly once to compute in-degree values
    This is O(e)
 
-2. Initial Queue Population
+2. Initial Queue Population: 
    We scan all n courses once to find those with in-degree 0
    This is O(n)
 
-3. BFS Processing (Kahn's Algorithm)
+3. BFS Processing (Kahn's Algorithm): 
    Each course is enqueued and dequeued exactly once : O(n)
    Each edge is relaxed (in-degree decremented) exactly once : O(e)
    Total processing cost is O(n + e)
 
-4. Semester Layer Tracking
+4. Semester Layer Tracking: 
    The layer-size variable divides the BFS into rounds without any additional passes
    No extra cost beyond the BFS itself
 
